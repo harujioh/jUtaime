@@ -2,8 +2,10 @@ apply plugin: 'java'
 apply plugin: 'maven'
 
 def myAppName = 'jUtaime'
+def myAppVersion = '1.4.0'
 
 group = 'xyz.hotchpotch'
+version = myAppVersion
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
