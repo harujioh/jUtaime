@@ -1,0 +1,68 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+def myAppName = 'jUtaime'
+
+group = 'xyz.hotchpotch'
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    jcenter()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+    compile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['project/src/main']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['project/src/test']
+        }
+    }
+}
+
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+
+    destinationDir = file('api-docs')
+}
+
+jar {
+    from sourceSets.main.allSource
+}
+
+ext {
+    mavenRepository = file('maven')
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file:${projectDir}/releases")
+        }
+    }
+}
+
+[install.repositories.mavenInstaller, uploadArchives.repositories.mavenDeployer]*.pom*.whenConfigured { pom ->
+    pom.project {
+        inceptionYear '2015'
+        packaging 'jar'
+        licenses {
+            license {
+                name 'The MIT License (MIT)'
+                url 'https://github.com/harujioh/jUtaime/blob/master/LICENSE.txt'
+                distribution 'repo'
+            }
+        }
+    }
+}
